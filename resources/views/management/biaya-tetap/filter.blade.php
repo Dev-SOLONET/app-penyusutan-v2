@@ -26,12 +26,49 @@
                         <div class="col-md-12 col-12 mb-3">
                             <label>Account Debit</label>
                             <select name="account_debit" class="form-control selectpicker" data-live-search="true">
+                                @if($account_debit == 0)
                                 <option selected value="0">--Semua Account--</option>
-                                <option value="56">Biaya Marketing Proyek</option>
+                                <option value="56">Biaya Marketing Corporate</option>
                                 <option value="65">Biaya Marketing</option>
                                 <option value="59">Cadangan THR</option>
                                 <option value="47">PPN</option>
                                 <option value="46">PPh ps 23</option>
+                                @elseif($account_debit == 56)
+                                <option value="0">--Semua Account--</option>
+                                <option selected value="56">Biaya Marketing Corporate</option>
+                                <option value="65">Biaya Marketing</option>
+                                <option value="59">Cadangan THR</option>
+                                <option value="47">PPN</option>
+                                <option value="46">PPh ps 23</option>
+                                @elseif($account_debit == 65)
+                                <option value="0">--Semua Account--</option>
+                                <option value="56">Biaya Marketing Corporate</option>
+                                <option selected value="65">Biaya Marketing</option>
+                                <option value="59">Cadangan THR</option>
+                                <option value="47">PPN</option>
+                                <option value="46">PPh ps 23</option>
+                                @elseif($account_debit == 59)
+                                <option value="0">--Semua Account--</option>
+                                <option value="56">Biaya Marketing Corporate</option>
+                                <option value="65">Biaya Marketing</option>
+                                <option selected value="59">Cadangan THR</option>
+                                <option value="47">PPN</option>
+                                <option value="46">PPh ps 23</option>
+                                @elseif($account_debit == 47)
+                                <option value="0">--Semua Account--</option>
+                                <option value="56">Biaya Marketing Corporate</option>
+                                <option value="65">Biaya Marketing</option>
+                                <option value="59">Cadangan THR</option>
+                                <option selected value="47">PPN</option>
+                                <option value="46">PPh ps 23</option>
+                                @elseif($account_debit == 46)
+                                <option value="0">--Semua Account--</option>
+                                <option value="56">Biaya Marketing Corporate</option>
+                                <option value="65">Biaya Marketing</option>
+                                <option value="59">Cadangan THR</option>
+                                <option value="47">PPN</option>
+                                <option selected value="46">PPh ps 23</option>
+                                @endif
                             </select>
                         </div>
                         <div class="col-md-12 col-12 mb-3">
@@ -43,7 +80,21 @@
                                 <option value="27">Hutang Fee</option>
                                 <option value="4">Biaya Dibayar Dimuka</option>
                                 @elseif($account_kredit == 17)
-                                
+                                <option value="0">--Semua Account--</option>
+                                <option selected value="17">Hutang Biaya</option>
+                                <option value="27">Hutang Fee</option>
+                                <option value="4">Biaya Dibayar Dimuka</option>
+                                @elseif($account_kredit == 27)
+                                <option value="0">--Semua Account--</option>
+                                <option value="17">Hutang Biaya</option>
+                                <option selected value="27">Hutang Fee</option>
+                                <option value="4">Biaya Dibayar Dimuka</option>
+                                @elseif($account_kredit == 4)
+                                <option value="0">--Semua Account--</option>
+                                <option value="17">Hutang Biaya</option>
+                                <option value="27">Hutang Fee</option>
+                                <option selected value="4">Biaya Dibayar Dimuka</option>
+                                @endif
                             </select>
                         </div>
                     </div>

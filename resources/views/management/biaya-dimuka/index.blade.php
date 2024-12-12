@@ -56,29 +56,39 @@
                                 <table id="dataTable" class="text-center table-striped table-sm" width="100%">
                                     <thead class="bg-light text-capitalize align-middle">
                                         <tr>
-                                            <th rowspan="2">Keterangan</th>
+                                            <th rowspan="2" style="width: 40%">Keterangan</th>
                                             <th rowspan="2">Total</th>
                                             <th rowspan="2">Nominal /Bln</th>
                                             <th colspan="2">Periode</th>
-                                            <th colspan="2">Laba Rugi</th>
+                                            <th rowspan="2">Account</th>
                                             <th rowspan="2" class="text-center">Action</th>
                                         </tr>
                                         <tr>
                                             <th>Mulai</th>
                                             <th>Selesai</th>
-                                            <th>Debit</th>
-                                            <th>Kredit</th>
                                     </thead>
                                     <tbody>
                                         @foreach ($data as $data)
+                                        @php
+                                            // hitung selisih bulan dari tanggal awal dan akhir dengan carbon
+                                            $date1 = new \Carbon\Carbon($data->tgl);
+                                            $date2 = new \Carbon\Carbon($data->tgl_akhir);
+                                            $diff = $date1->diffInMonths($date2);
+                                            // bulatkah ke atas 
+                                            $bulan = ceil($diff);
+                                        @endphp
                                             <tr>
-                                                <td class="text-left">{{ $data->nama }}</td>
+                                                <td class="text-left">
+                                                  <p class="text-wrap">{{ $data->nama }}</p>
+                                                </td>
                                                 <td class="text-right">{{ number_format($data->nominal) }}</td>
-                                                <td class="text-right">{{ number_format($data->nominal) }}</td>
+                                                <td class="text-right">{{ number_format($data->nominal / $bulan) }}</td>
                                                 <td class="text-left">{{ date('d/m/Y', strtotime($data->tgl)) }}</td>
                                                 <td class="text-left">{{ date('d/m/Y', strtotime($data->tgl_akhir)) }}</td>
-                                                <td class="text-left">{{ $data->account_debit->nama_account }}</td>
-                                                <td class="text-left">{{ $data->account_kredit->nama_account }}</td>
+                                                <td class="text-left">
+                                                    <p class="mb-0">{{ $data->account_debit->nama_account }}</p>
+                                                    <p style="padding-left: 2em;">{{ $data->account_kredit->nama_account }}</p>
+                                                </td>
                                                 <td class="text-center align-middle">
                                                     <button type="button" onclick="edit_data({{ $data->id }})"
                                                         class="btn btn-info btn-xs"><i
@@ -104,7 +114,7 @@
         </div>
         <!-- data table end -->
     </div>
-    @include('management.biaya-tetap.modal')
+    @include('management.biaya-dimuka.modal')
 </div>
 <!-- main content area end -->
 @endsection
@@ -140,19 +150,25 @@
     function edit_data(id){
         $('#form')[0].reset();
         $.ajax({
-        url : "/management/biaya-tetap/" + id + "/edit",
+        url : "/management/biaya-dimuka/" + id + "/edit",
         type: "GET",
         dataType: "JSON",
         success: function(data) {
+            $('[name="id"]').val('');
+           
             $('[name="id"]').val(data.id);
             $('[name="nama"]').val(data.nama);
             $('[name="tgl"]').val(data.tgl);
             $('[name="tgl_akhir"]').val(data.tgl_akhir);
             $('[name="nominal"]').val(data.nominal);
-            $('[name="id_account_debit"]').selectpicker('val', data.id_account_debit);
-            $('[name="id_account_kredit"]').selectpicker('val', data.id_account_kredit);
-            $('#modal').modal('show'); // show bootstrap modal when complete loaded
-            $('.modal-title').text('Edit Data'); // Set title to Bootstrap modal title
+
+            $('[name="n_id_account_debit"]').selectpicker('val', data.n_id_account_debit);
+            $('[name="n_id_account_kredit"]').selectpicker('val', data.n_id_account_kredit);
+            $('[name="lr_id_account_debit"]').selectpicker('val', data.lr_id_account_debit);
+            $('[name="lr_id_account_kredit"]').selectpicker('val', data.lr_id_account_kredit);
+
+            $('#modal').modal('show');
+            $('#exampleModalLabel').text('Edit Biaya Tetap');
         },
         error: function (jqXHR, textStatus , errorThrown) {
             alert(errorThrown);

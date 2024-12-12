@@ -10,7 +10,6 @@ class DataTemp extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id_temp',
         'tanggal',
         'keterangan',
         'no_log_pembayaran',

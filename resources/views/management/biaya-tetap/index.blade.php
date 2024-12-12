@@ -63,7 +63,7 @@
                                             <th rowspan="2">Keterangan</th>
                                             <th rowspan="2">Nominal</th>
                                             <th colspan="2">Periode</th>
-                                            <th colspan="2">Laba Rugi</th>
+                                            <th colspan="2">Account</th>
                                             <th rowspan="2" class="text-center">Action</th>
                                         </tr>
                                         <tr>
