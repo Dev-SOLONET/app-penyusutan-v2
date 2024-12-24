@@ -42,10 +42,26 @@
                     <div class="card mt-3">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6 col-12">
-                                    <h4 class="header-title">Data Biaya Dimuka</h4>
+                                <div class="col-md-4 col-12">
+                                    <div class="d-flex flex-column bd-highlight mb-3">
+                                        <div class="p-1 bd-highlight">
+                                            <h4 class="header-title">Data Biaya Tetap</h4>
+                                        </div>
+                                        <div class="p-1 bd-highlight">
+                                            <label for="filter_tahun">Filter Tahun</label>
+                                            <select name="filter_tahun" class="form-control selectpicker" data-live-search="true">
+                                                @for ($i = 2021; $i <= date('Y'); $i++)
+                                                    @if($tahun == $i)
+                                                    <option value="{{ $i }}" selected>{{ $i }}</option>
+                                                    @else
+                                                    <option value="{{ $i }}">{{ $i }}</option>
+                                                    @endif
+                                                @endfor
+                                            </select>
+                                        </div>
+                                      </div>
                                 </div>
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-8 col-12">
                                     <button type="hidden" onclick="tambah_data()"
                                         class="btn btn-outline-info float-right mb-3"><i
                                             class="ti-plus"> </i>
@@ -140,11 +156,19 @@
         });
     });
 
+    // filter_tahun on change
+    $(document).on('change', 'select[name="filter_tahun"]', function(){
+        var tahun = $(this).val();
+        window.location.href = '/management/biaya-dimuka?tahun=' + tahun;
+    });
+
     function tambah_data(){
         $('#modal').modal('show');
         $('#form')[0].reset();
         // set modal title
         $('#exampleModalLabel').text('Tambah Biaya Tetap');
+        // reset selectpicker
+        $('.selectpicker').selectpicker('refresh');
     }
 
     function edit_data(id){

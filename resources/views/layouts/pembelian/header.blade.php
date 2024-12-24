@@ -5,10 +5,22 @@
                 <nav>
                     <ul id="nav_menu">
                         <li>
+                            <a href="{{ route('admin.barang.index') }}"><i class="ti-package"></i><span>Barang</span></a>
+                        </li>
+                        <li>
+                            <a href=""><i class="ti-stats-down"></i><span>Penyusutan</span></a>
+                        </li>
+                        <li>
+                            <a href=""><i class="ti-bar-chart"></i><span>Akumulasi Investasi</span></a>
+                        </li>
+                        <li>
+                            <a href=""><i class="ti-briefcase"></i><span>Nilai Buku</span></a>
+                        </li>
+                        <li>
                             <a href="javascript:void(0)"><i class="ti-angle-double-down"></i><span>Menu Tambahan</span></a>
                             <ul class="submenu">
-                                    <li><a href="{{ route('management.biaya-tetap.index') }}"><i class="ti-menu"></i><span>Biaya Tetap</span></a></li>
-                                    <li><a href="{{ route('management.biaya-dimuka.index') }}"><i class="ti-menu-alt"></i><span>Biaya Dimuka</span></a></li>
+                                    <li><a href="{{ route('management.biaya-tetap.index') }}"><i class="ti-panel"></i><span>Biaya Tetap</span></a></li>
+                                    <li><a href="{{ route('management.biaya-dimuka.index') }}"><i class="ti-bookmark-alt"></i><span>Biaya Dimuka</span></a></li>
                             </ul>
                         </li>
                         <li>

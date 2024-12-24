@@ -18,17 +18,12 @@ class BiayaDimukaController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->has('from') && $request->has('to')) {
-            $data = BiayaDimuka::with(['account_debit', 'account_kredit'])->where('tgl', '>=', $request->get('from'))
-                ->where('tgl', '<=', $request->get('to'))
-                ->orderBy('updated_at', 'desc')
-                ->get();
-        } else {
-            $data = BiayaDimuka::with(['account_debit', 'account_kredit'])->where('tgl', '>=', date('Y-01-01'))
-                ->where('tgl', '<=', date('Y-12-31'))
-                ->orderBy('updated_at', 'desc')
-                ->get();
-        }
+        $tahun = $request->get('tahun') ?? date('Y');
+
+        $data = BiayaDimuka::with(['account_debit', 'account_kredit'])
+            ->whereYear('tgl', $tahun)
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
         $account = Account::select('id_account', 'nama_account')
             ->orderBy('nama_account')
@@ -37,7 +32,8 @@ class BiayaDimukaController extends Controller
         return view('management.biaya-dimuka.index', [
             'title'     => 'Data Biaya Dimuka',
             'data'      => $data,
-            'account'   => $account
+            'account'   => $account,
+            'tahun'     => $tahun,
         ]);
     }
 
@@ -65,7 +61,7 @@ class BiayaDimukaController extends Controller
             'lr_id_account_kredit'  => 'required',
         ]);
 
-        if($request->id){
+        if ($request->id) {
             return $this->update($request, $request->id);
         }
 
@@ -250,7 +246,6 @@ class BiayaDimukaController extends Controller
                 ]);
 
                 $id_temp = $id_temp->id;
-
             } else {
                 $id_temp = null;
             }
@@ -363,6 +358,31 @@ class BiayaDimukaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+
+            // delete old data
+            $old_data = BiayaDimuka::find($id);
+
+            $id_transaksi = json_decode($old_data->id_transaksi);
+
+            DataTransaksi::whereIn('id_transaksi', $id_transaksi)->delete();
+
+            if ($old_data->id_temp != null) {
+                DataTemp::where('id_temp', $old_data->id_temp)->delete();
+            }
+
+            $old_data->delete();
+
+            DB::commit();
+
+            return redirect()->route('management.biaya-dimuka.index')->with('success', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+
+            DB::rollback();
+
+            return redirect()->route('management.biaya-dimuka.index')->with('error', 'Data gagal dihapus ' . $e->getMessage());
+        }
     }
 }

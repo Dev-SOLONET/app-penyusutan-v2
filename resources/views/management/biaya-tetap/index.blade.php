@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table id="dataTable" class="text-center" width="100%">
+                                <table id="dataTable" class="text-center table-striped" width="100%">
                                     <thead class="bg-light text-capitalize align-middle">
                                         <tr>
                                             <th rowspan="2">Keterangan</th>
@@ -138,6 +138,8 @@
         $('#form')[0].reset();
         // set modal title
         $('#exampleModalLabel').text('Tambah Biaya Tetap');
+        // reset selectpicker
+        $('.selectpicker').selectpicker('refresh');
     }
 
     function filter_data(){
