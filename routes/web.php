@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\SatuanController;
 use App\Http\Controllers\Admin\BarangController;
+use App\Http\Controllers\Admin\NilaiBukuController;
 use App\Http\Controllers\Management\BiayaTetapController;
 use App\Http\Controllers\Management\BiayaDimukaController;
 
@@ -22,5 +23,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         'pengguna'  => PenggunaController::class,
         'satuan'    => SatuanController::class,
         'barang'    => BarangController::class,
+        'nilai-buku' => NilaiBukuController::class,
     ]);
 });

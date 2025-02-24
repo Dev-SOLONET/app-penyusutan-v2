@@ -3,29 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Barang;
 use App\Models\Pengguna;
+use Illuminate\Http\Request;
 
-class BarangController extends Controller
+class NilaiBukuController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        // default value
-        $tgl_awal   = $request->tgl_awal ?? date('Y-m-01');
-        $tgl_akhir  = $request->tgl_akhir ?? date('Y-m-t');
+        $penggunaan = Pengguna::select('id', 'nama')->get();
 
-        // get data barang
-        $barang = Barang::with(['pengguna', 'satuan'])
-                    ->whereBetween('tgl_beli', [$tgl_awal, $tgl_akhir])
-                    ->get();
-
-        return view('admin.barang.index', [
-            'title'     => 'Barang',
-            'barang'    => $barang,
+        return view('admin.nilai-buku.index',[
+            'title'         => 'Nilai Buku',
+            'penggunaan'    => $penggunaan
         ]);
     }
 
@@ -34,12 +26,7 @@ class BarangController extends Controller
      */
     public function create()
     {
-        $penggunaan = Pengguna::select('id', 'nama')->get();
-
-        return view('admin.barang.create', [
-            'title' => 'Tambah Barang',
-            'penggunaan' => $penggunaan,
-        ]);
+        //
     }
 
     /**
